@@ -1,0 +1,25 @@
+{
+  "name": "enjoy",
+  "version": "1.0.0",
+  "description": "从数组中选出和等于固定值的n个数",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zzsscc/excel-getCombBySum.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "excel",
+    "utils"
+  ],
+  "author": "zsc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zzsscc/excel-getCombBySum/issues"
+  },
+  "homepage": "https://github.com/zzsscc/excel-getCombBySum#readme"
+}
