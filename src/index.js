@@ -4,6 +4,7 @@ import fs from 'fs'
 import inquirer from 'inquirer'
 import logger from './utils/logger'
 import getCombBySum from './utils/index'
+import { async } from 'rxjs/internal/scheduler/async';
 
 // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 // const sum = 10
@@ -56,7 +57,7 @@ const promptList = [{
   message: '自定义操作数数量:',
   name: 'targetCount',
   default: '',
-  when: function (answers) { // 当watch为true的时候才会提问当前问题
+  when: function (answers) { // 当useDefault为false的时候才会提问当前问题
     return !answers.useDefault
   }
 }, {
@@ -64,16 +65,18 @@ const promptList = [{
   message: '自定义容差:',
   name: 'tolerance',
   default: '',
-  when: function (answers) { // 当watch为true的时候才会提问当前问题
+  when: function (answers) { // 当useDefault为false的时候才会提问当前问题
     return !answers.useDefault
   }
 }];
 // /Users/dasouche/Downloads/progressBar.html
-inquirer.prompt(promptList).then(answers => {
+const inquirerQuestion = async () => {
+  const answers = await inquirer.prompt(promptList)
   logger.cyan(answers); // 返回的结果
   const { targetCount, tolerance } = answers
   if (targetCount && tolerance) {
     defaultParam = { targetCount: +targetCount, tolerance: +tolerance }
   }
   logger.cyan(`defaultParam: ${JSON.stringify(defaultParam)}`)
-})
+}
+inquirerQuestion()
