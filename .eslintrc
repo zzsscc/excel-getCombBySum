@@ -68,7 +68,8 @@
     "no-param-reassign": ["error", {
       "props": false
     }],
-    "object-shorthand": 0
+    "object-shorthand": 0,
+    "arrow-parens" : 0
   },
   "plugins": [
     "react",

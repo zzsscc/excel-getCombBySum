@@ -23,7 +23,7 @@ export const getCombination = (arr, num) => {
  * @param {Array} arr target array
  * @success: {Array} one array that include array index
  */
-export const getArrayIndex = (arr) => {
+export const getArrayIndex = arr => {
   const r = [];
   arr.forEach((d, i) => {
     r.push(i);
