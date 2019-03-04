@@ -44,6 +44,7 @@
     "bluebird": "^3.5.3",
     "colors": "^1.3.3",
     "core-js": "^2.6.5",
-    "inquirer": "^6.2.2"
+    "inquirer": "^6.2.2",
+    "node-xlsx": "^0.14.1"
   }
 }
