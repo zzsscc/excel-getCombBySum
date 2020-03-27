@@ -5,7 +5,7 @@ export default {
     console.log(`\n[Info] ${colors.white(msg)}`)
   },
   cyan(msg) {
-    console.log(`\n[Info] ${colors.cyan(msg)}`)
+    console.log(`\n[Cyan] ${colors.cyan(msg)}`)
   },
   success(msg) {
     console.log(`\n[success] ${colors.green(msg)}`)

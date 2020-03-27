@@ -80,6 +80,9 @@ const getCombBySum = function (array, sum, targetCount = 0, tolerance = 0) {
 
   // important function
   this.core = (arr, target, arrayIndex, count, r) => {
+    if (r.length) {
+      return;
+    }
     let combArray = []
     let _sum = 0
     let _cca = []

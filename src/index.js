@@ -1,10 +1,11 @@
 require('../server.babel')
 
 import fs from 'fs'
+import xlsx from 'node-xlsx';
 import inquirer from 'inquirer'
 import logger from './utils/logger'
 import getCombBySum from './utils/index'
-import { async } from 'rxjs/internal/scheduler/async';
+// import { async } from 'rxjs/internal/scheduler/async';
 
 // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 // const sum = 10
@@ -21,6 +22,9 @@ let defaultParam = {
 }
 // 是否使用默认配置
 let useDefault = false
+let xlsxData = null
+let datasArr = []
+
 
 // 监听输入
 const promptList = [{
@@ -43,15 +47,25 @@ const promptList = [{
   name: 'file',
   default: '',
   validate: async (input) => {
-    let result
     try {
-      result = fs.readFileSync(input)
-      logger.cyan(result)
+      xlsxData = xlsx.parse(input);
       return true
     } catch (err) {
       logger.error(`读取文件失败, 请重新输入 ${err}`)
+      return false
     }
   }
+}, {
+  type: 'input',
+  message: '取第几列的数据:',
+  name: 'column',
+  default: ''
+}, {
+  type: 'input',
+  message: '从第几行开始:',
+  name: 'startRow',
+  default: '',
+
 }, {
   type: 'input',
   message: '自定义操作数数量:',
@@ -68,15 +82,44 @@ const promptList = [{
   when: function (answers) { // 当useDefault为false的时候才会提问当前问题
     return !answers.useDefault
   }
+}, {
+  type: 'input',
+  message: '目标总值:',
+  name: 'targetSum',
+  default: ''
 }];
-// /Users/dasouche/Downloads/progressBar.html
+
+// /Users/dasouche/Downloads/客户消费明细表2014（瑞安）.xls
 const inquirerQuestion = async () => {
   const answers = await inquirer.prompt(promptList)
-  logger.cyan(answers); // 返回的结果
-  const { targetCount, tolerance } = answers
+  // logger.cyan(answers); // 返回的结果
+  const {
+    column,
+    startRow,
+    targetCount,
+    tolerance
+  } = answers
   if (targetCount && tolerance) {
-    defaultParam = { targetCount: +targetCount, tolerance: +tolerance }
+    defaultParam = {
+      targetCount: +targetCount,
+      tolerance: +tolerance
+    }
   }
-  logger.cyan(`defaultParam: ${JSON.stringify(defaultParam)}`)
+
+  // 拿数据
+  for (let i = +startRow; i < xlsxData[0].data.length; i += 1) { // excel文件里的表格一般有标题所以不一定从0开始
+    const row = xlsxData[0].data[i];
+    if (row && row.length > 0) {
+      datasArr.push(row[+column])
+      // id: row[22], // row[22]对应表格里W这列
+    }
+  }
+  datasArr = Array.from(new Set(datasArr))
+  logger.cyan(datasArr)
+
+  const rule = { ...defaultParam, ...answers }
+  logger.cyan(`rule: ${JSON.stringify(rule)}`)
+  const result = new getCombBySum(datasArr, +rule.targetSum, rule.targetCount, rule.tolerance)
+  logger.success(`=> ${JSON.stringify(result[0])}`)
 }
 inquirerQuestion()
