@@ -120,6 +120,6 @@ const inquirerQuestion = async () => {
   const rule = { ...defaultParam, ...answers }
   logger.cyan(`rule: ${JSON.stringify(rule)}`)
   const result = new getCombBySum(datasArr, +rule.targetSum, rule.targetCount, rule.tolerance)
-  logger.success(`=> ${JSON.stringify(result[0])}`)
+  logger.success(`=> ${JSON.stringify(result)}`)
 }
 inquirerQuestion()
