@@ -17,7 +17,7 @@ import getCombBySum from './utils/index'
 
 // 配置默认的可选参数
 let defaultParam = {
-  targetCount: 3, // 操作数数量
+  targetCount: 0, // 操作数数量
   tolerance: 0 // 容差
 }
 // 是否使用默认配置
@@ -120,6 +120,7 @@ const inquirerQuestion = async () => {
   const rule = { ...defaultParam, ...answers }
   logger.cyan(`rule: ${JSON.stringify(rule)}`)
   const result = new getCombBySum(datasArr, +rule.targetSum, rule.targetCount, rule.tolerance)
-  logger.success(`=> ${JSON.stringify(result)}`)
+  fs.writeFileSync('./index.txt', result);
+  // logger.success(`=> ${JSON.stringify(result)}`)
 }
 inquirerQuestion()
