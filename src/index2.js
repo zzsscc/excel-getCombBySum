@@ -16,7 +16,7 @@ const inquirerQuestion = async () => {
   const {
     day
   } = answers
-  const date = day ? new Date(`${day} 23:59:59`) : new Date()
+  const date = day ? new Date(`${day} 00:00:00`) : new Date()
   const currentYear = date.getFullYear().toString();
   const hasTimestamp = date - new Date(currentYear);
   const hasDays = Math.ceil(hasTimestamp / 86400000) + 1;
