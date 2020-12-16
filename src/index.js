@@ -59,13 +59,18 @@ const promptList = [{
   type: 'input',
   message: '取第几列的数据:',
   name: 'column',
-  default: ''
+  default: '',
+  filter: (val) => { // 序列那列去掉
+    return +val - 1
+  }
 }, {
   type: 'input',
   message: '从第几行开始:',
   name: 'startRow',
   default: '',
-
+  filter: (val) => { // 表头那行去掉
+    return +val - 1
+  }
 }, {
   type: 'input',
   message: '自定义操作数数量:',
@@ -120,7 +125,7 @@ const inquirerQuestion = async () => {
   const rule = { ...defaultParam, ...answers }
   logger.cyan(`rule: ${JSON.stringify(rule)}`)
   const result = new getCombBySum(datasArr, +rule.targetSum, rule.targetCount, rule.tolerance)
-  fs.writeFileSync('./index.txt', result);
-  // logger.success(`=> ${JSON.stringify(result)}`)
+  fs.writeFileSync('./index.txt', JSON.stringify(result));
+  logger.success(`=> ${JSON.stringify(result)}`)
 }
 inquirerQuestion()

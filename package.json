@@ -4,7 +4,7 @@
   "description": "从数组中选出和等于固定值的n个数",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node --max_old_space_size=4096 src/index2.js",
+    "start": "babel-node --max_old_space_size=4096 src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
